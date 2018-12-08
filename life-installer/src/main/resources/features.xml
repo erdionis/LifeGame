@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+feature:repo-add hawtio 1.5.8
+feature:install hawtio
+feature:repo-add mvn:ru.erdi/life-installer/1.0-SNAPSHOT/xml/features
+feature:install life-camel-dependencies
+feature:install life-game
+ -->
+
+<features name="life-installer-${life.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.0.0">
+
+	<!-- Установка  -->
+	<repository>mvn:org.apache.camel.karaf/apache-camel/${camel.version}/xml/features</repository>
+	<feature name="life-camel-dependencies" version="${life.version}">
+		<feature>aries-proxy</feature>
+        <feature>aries-blueprint</feature>
+        <feature>camel-core</feature>
+        <feature>camel-blueprint</feature>
+        <feature>camel-websocket</feature>
+        <feature>camel-cdi</feature>
+        <feature>http</feature>
+        <feature>camel-cxf</feature>
+	</feature>
+
+	<feature name="life-game" version='${life.version}'>
+		
+		<!-- dependencies -->
+		<bundle start-level="70" start="true">mvn:com.google.code.gson/gson-osgi/${gson.version}</bundle>
+		<bundle start-level="70" start="true">mvn:org.apache.cxf.xjc-utils/cxf-xjc-runtime/${cxf-xjc.version}</bundle>	
+		<bundle start-level="70" start="true">mvn:org.apache.commons/commons-lang3/${commons.lang.version}</bundle>
+		<bundle start-level="70" start="true">mvn:org.xerial/sqlite-jdbc/${sqlite.jdbc.version}</bundle>
+		<bundle start-level="70" start="true">mvn:joda-time/joda-time/${joda.time.version}</bundle>
+
+		<!-- root bundles -->
+		<bundle>mvn:ru.erdi/life-facade/${life.version}</bundle>
+		<bundle>mvn:ru.erdi/life-db/${life.version}</bundle>
+	</feature>
+
+</features>
