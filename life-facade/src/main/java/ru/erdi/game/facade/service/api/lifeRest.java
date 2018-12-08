@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import ru.erdi.game.facade.types.Form;
+import ru.erdi.game.facade.types.InfoEntity;
 import ru.erdi.game.facade.types.InfoGeneration;
 
 import java.util.List;
@@ -30,22 +31,22 @@ public interface lifeRest {
 	@Path("seventhday")
 	@ApiOperation(value = "seventhday", 
 		notes = "Создание мира", 
-		response = String.class)
+		response = InfoEntity.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Успешный ответ"),
 							@ApiResponse(code = 400, message = "Неправильный запрос", response = Error.class) })
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
-	public String seventhday(@ApiParam(name="form", value = "Начальная форма заполнения", required = true) Form form);
+	public InfoEntity seventhday(@ApiParam(name="form", value = "Начальная форма заполнения", required = true) Form form);
 	
 	@POST
 	@Path("nextday")
 	@ApiOperation(value = "nextday", 
 		notes = "Создание следующего дня/новое поколение", 
-		response = Entity.class)
+		response = InfoEntity.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Успешный ответ"),
 							@ApiResponse(code = 400, message = "Неправильный запрос", response = Error.class) })
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
-	public List<Entity> nextday(@ApiParam(name="InfoGeneration", value = "Информация о поколении", required = true) InfoGeneration req);
+	public InfoEntity nextday(@ApiParam(name="InfoGeneration", value = "Информация о поколении", required = true) InfoGeneration req);
 	
 }

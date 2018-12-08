@@ -1,5 +1,7 @@
 package ru.erdi.game.facade.types;
 
+import java.util.UUID;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -17,12 +19,9 @@ import lombok.ToString;
 @ToString
 @ApiModel(value="Entity", discriminator = "Информация об объекте")
 public class Entity {
-	@ApiModelProperty(value = "Идентификатор")
-	private String uid;
-	@ApiModelProperty(value = "Номер поколения")
-	private Long age;
 	@ApiModelProperty(value = "Координата Х")
 	private int x;
 	@ApiModelProperty(value = "Координата У")
 	private int y;
+	
 }
