@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.sqlite.SQLiteDataSource;
 
 import ru.erdi.game.db.SqliteLifeService;
 import ru.erdi.game.facade.types.Entity;
+import ru.erdi.game.facade.types.InfoEntity;
 
 public class SqliteLifeServiceImpl implements SqliteLifeService {
 	
@@ -49,9 +51,8 @@ public class SqliteLifeServiceImpl implements SqliteLifeService {
 	
     private synchronized void createNewTable() {
         try (Connection connection = connect()){
-        	String tableMnpKody="CREATE TABLE ENTITY (\r\n" + 
+        	String tableMnpKody="CREATE TABLE IF NOT EXISTS ENTITY (\r\n" + 
         			"    KEY VARCHAR2(50) NOT NULL,\r\n" +
-        			"    UID VARCHAR2(50) NOT NULL,\r\n" + 
         			"    AGE BIGINT NOT NULL,\r\n" + 
         			"    X INTEGER NOT NULL,\r\n" + 
         			"    Y INTEGER  NOT NULL\r\n" + 
@@ -106,20 +107,19 @@ public class SqliteLifeServiceImpl implements SqliteLifeService {
 	}
 
 	@Override
-	public void setEntity(String key, HashSet<Entity> world) {
+	public synchronized void setEntity(InfoEntity world) {
 		try (Connection connection = connect()){
-			String insert = "INSERT INTO ENTITY VALUES (?, ?, ?, ?, ?)";
-			if (world.size()>0) {
+			String insert = "INSERT INTO ENTITY VALUES (?, ?, ?, ?)";
+			if (world.getEntitys().size()>0) {
 	            try (PreparedStatement pstmt = connection.prepareStatement(insert)){
 	            	
 	            	connection.setAutoCommit(false);
-	            	world.forEach(entity ->{
+	            	world.getEntitys().forEach(entity ->{
 	            		try {
-	            			pstmt.setString(1, key);
-	            			pstmt.setString(2, entity.getUid());
-							pstmt.setLong(3, entity.getAge());
-		                	pstmt.setInt(4, entity.getX());
-		                	pstmt.setInt(5, entity.getY());
+	            			pstmt.setString(1, world.getKey());
+							pstmt.setLong(2, world.getAge());
+		                	pstmt.setInt(3, entity.getX());
+		                	pstmt.setInt(4, entity.getY());
 		                	
 		                	pstmt.executeUpdate();
 						} catch (SQLException e) {
@@ -135,24 +135,34 @@ public class SqliteLifeServiceImpl implements SqliteLifeService {
 	}
 
 	@Override
-	public HashSet<Entity> getEntity(String key, Long age) {
-		HashSet<Entity> prevWorld = new HashSet<Entity>();
+	public InfoEntity getEntity(String key, Long age) {
+		List<Entity> prevWorld = new ArrayList<Entity>();
 		try (Connection connection = connect()){
-			String sql="SELECT * FROM ENTITY WHERE KEY=? and AGE=?";
+			String sql="SELECT X,Y FROM ENTITY WHERE KEY=? and AGE=?";
 			
 	        try (PreparedStatement pstmt = connection.prepareStatement(sql)){
 	        	pstmt.setString(1, key);
 	        	pstmt.setLong(2, age);
 	        	
 	        	ResultSet rs  = pstmt.executeQuery();
-	        	while (rs.next()) {
-	        		prevWorld.add(new Entity(rs.getString("UID"), rs.getLong("AGE"), rs.getInt("X"), rs.getInt("Y")));
+	        	if (rs!=null) {
+	        		while (rs.next()) {
+		        		prevWorld.add(new Entity(rs.getInt("X"), rs.getInt("Y")));
+		        	}
+		        	InfoEntity infoEntity=new InfoEntity();
+		        	infoEntity.setKey(key);
+		        	infoEntity.setAge(age);
+		        	infoEntity.setEntitys(prevWorld);
+		        	
+		        	return infoEntity;
+	        	} else {
+	        		return null;
 	        	}
-	        	return prevWorld;
+	        	
 	        }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            return prevWorld; // пока пустота, потом переделать на обработчик ошибок, который также вернет пустоту, но даст событие ошибки для анализа
+            return null; // пока пустота, потом переделать на обработчик ошибок, который также вернет пустоту, но даст событие ошибки для анализа
         }
 	}
 }
