@@ -1,0 +1,108 @@
+---
+swagger: "2.0"
+info:
+  version: "v1"
+  title: "Life :: Create worlds"
+host: "localhost"
+basePath: "/life"
+schemes:
+- "https"
+paths:
+  /nextday:
+    post:
+      summary: "nextday"
+      description: "Создание следующего дня/новое поколение"
+      operationId: "nextday"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "InfoGeneration"
+        description: "Информация о поколении"
+        required: true
+        schema:
+          $ref: "#/definitions/InfoGeneration"
+      responses:
+        200:
+          description: "Успешный ответ"
+          schema:
+            $ref: "#/definitions/InfoEntity"
+        400:
+          description: "Неправильный запрос"
+          schema:
+            $ref: "#/definitions/Error"
+  /seventhday:
+    post:
+      summary: "seventhday"
+      description: "Создание мира"
+      operationId: "seventhday"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "form"
+        description: "Начальная форма заполнения"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "Успешный ответ"
+          schema:
+            $ref: "#/definitions/InfoEntity"
+        400:
+          description: "Неправильный запрос"
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  Entity:
+    type: "object"
+    properties:
+      x:
+        type: "integer"
+        format: "int32"
+        description: "Координата Х"
+      y:
+        type: "integer"
+        format: "int32"
+        description: "Координата У"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      detailMessage:
+        type: "string"
+    xml:
+      name: "Error"
+  InfoEntity:
+    type: "object"
+    properties:
+      key:
+        type: "string"
+        description: "Идентификатор мира, присвоенный при создании мира"
+      age:
+        type: "integer"
+        format: "int64"
+        description: "Номер поколения"
+      entitys:
+        type: "array"
+        items:
+          $ref: "#/definitions/Entity"
+  InfoGeneration:
+    type: "object"
+    properties:
+      key:
+        type: "string"
+        description: "Идентификатор мира, присвоенный при создании мира"
+      age:
+        type: "integer"
+        format: "int64"
+        description: "Номер поколения"

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<title>API Document</title>
+
+<xmp theme="united" style="display:none;">
+#Life :: Create worlds
+
+
+## HTTPS://localhost/life
+
+
+
+
+
+
+**Version** v1
+
+[**Terms of Service**]()
+
+
+
+
+
+
+
+
+
+
+
+
+# APIs
+
+
+## /nextday
+
+
+
+
+
+
+### POST
+
+
+<a id="nextday">nextday</a>
+
+Создание следующего дня/новое поколение
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>InfoGeneration</th>
+    <td>body</td>
+    <td>yes</td>
+    <td>Информация о поколении</td>
+    <td> - </td>
+
+    <td>
+    
+    <a href="#/definitions/InfoGeneration">InfoGeneration</a> 
+    </td>
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | Успешный ответ | <a href="#/definitions/InfoEntity">InfoEntity</a>|
+| 400    | Неправильный запрос | <a href="#/definitions/Error">Error</a>|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /seventhday
+
+
+
+
+
+
+### POST
+
+
+<a id="seventhday">seventhday</a>
+
+Создание мира
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>form</th>
+    <td>body</td>
+    <td>yes</td>
+    <td>Начальная форма заполнения</td>
+    <td> - </td>
+
+    <td>
+    
+    
+    </td>
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | Успешный ответ | <a href="#/definitions/InfoEntity">InfoEntity</a>|
+| 400    | Неправильный запрос | <a href="#/definitions/Error">Error</a>|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Definitions
+
+## <a name="/definitions/Entity">Entity</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>x</td>
+            <td>
+                
+                    
+                    integer (int32)
+                
+            </td>
+            <td>optional</td>
+            <td>Координата Х</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>y</td>
+            <td>
+                
+                    
+                    integer (int32)
+                
+            </td>
+            <td>optional</td>
+            <td>Координата У</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/Error">Error</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>code</td>
+            <td>
+                
+                    
+                    integer (int32)
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>message</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>detailMessage</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/InfoEntity">InfoEntity</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>key</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>Идентификатор мира, присвоенный при создании мира</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>age</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>Номер поколения</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>entitys</td>
+            <td>
+                
+                
+                    array[<a href="#/definitions/Entity">Entity</a>]
+                
+                
+                
+            </td>
+            <td>optional</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+## <a name="/definitions/InfoGeneration">InfoGeneration</a>
+
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>type</th>
+        <th>required</th>
+        <th>description</th>
+        <th>example</th>
+    </tr>
+    
+        <tr>
+            <td>key</td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>optional</td>
+            <td>Идентификатор мира, присвоенный при создании мира</td>
+            <td></td>
+        </tr>
+    
+        <tr>
+            <td>age</td>
+            <td>
+                
+                    
+                    integer (int64)
+                
+            </td>
+            <td>optional</td>
+            <td>Номер поколения</td>
+            <td></td>
+        </tr>
+    
+</table>
+
+
+
+</xmp>
+
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+</html>
