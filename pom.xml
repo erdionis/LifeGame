@@ -151,7 +151,7 @@
 		</pluginManagement>
 	</build>
 
-	<repositories>
+<!-- 	<repositories>
 		<repository>
 			<id>artifactory</id>
 			<url>http://bus-repo:8081/artifactory/remote-repos/</url>
@@ -171,7 +171,7 @@
 				<updatePolicy>never</updatePolicy>
 			</releases>
 		</pluginRepository>
-	</pluginRepositories>
+	</pluginRepositories> -->
 
 	<properties>
 		<!-- project properties -->
