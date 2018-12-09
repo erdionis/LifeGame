@@ -130,7 +130,7 @@ local.properties
 *.iml
 /.idea
 /.nbactions.xml
-
+!/life-installer/src/main/lib/**/*
 target/
 
 *.episode
