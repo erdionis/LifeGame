@@ -26,6 +26,11 @@
 			<artifactId>cxf-xjc-runtime</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>org.apache.camel</groupId>
+		    <artifactId>camel-atmosphere-websocket</artifactId>
+		    <version>2.22.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
@@ -95,6 +100,8 @@
                 </executions>
             </plugin>
 		
+
+		
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.felix</groupId>
@@ -110,6 +117,9 @@
 							<instructions>
 								<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 								<Bundle-Version>${life.version}</Bundle-Version>
+								<!-- <Embed-Dependency>
+                                    *;scope=compile|runtime
+                                </Embed-Dependency> -->
 								<Import-Package>
                                     *;resolution:=optional
 								</Import-Package>

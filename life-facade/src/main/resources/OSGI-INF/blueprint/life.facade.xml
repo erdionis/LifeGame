@@ -15,6 +15,8 @@
 		<cm:default-properties>
 			<cm:property name="life.rest.server" value="0.0.0.0:8081" />
 			<cm:property name="life.rest.uri" value="/life/rest" />
+			<cm:property name="life.websocket.server" value="0.0.0.0:8080" />
+			<cm:property name="life.websocket.uri" value="/life/websocket" />
 		</cm:default-properties>
 	</cm:property-placeholder>
     
